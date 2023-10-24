@@ -1,3 +1,5 @@
+//index.js
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -18,11 +20,3 @@ export const fetchEvolutionChain = async (id) => {
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container); // react-dom/clientからimport
 root.render(<App />);
-
-// // React 18の新しいAPI createRootを使用してアプリをレンダリング
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById("root")
-// );

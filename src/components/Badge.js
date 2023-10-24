@@ -1,4 +1,5 @@
 // components/Badge.js
+
 import React from "react";
 
 const Badge = ({ name }) => {

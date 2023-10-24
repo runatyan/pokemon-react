@@ -17,12 +17,17 @@ function IndexPage() {
       try {
         // Promiseの結果を待つ
         const result = await fetchPokemons();
+
+        console.log(result);
+
         const pokemonData = result.results;
 
         // 結果をセット
         setPokemons(pokemonData);
-      } catch (err) {
-        setError(err);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        console.log(error);
       }
     };
 

@@ -1,4 +1,5 @@
 // api/index.js
+
 import axios from "axios";
 
 export const fetchPokemon = async (id) => {
