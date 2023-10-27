@@ -16,3 +16,11 @@ function PokemonNav({ pokemon }) {
 }
 
 export default PokemonNav;
+
+/*
+このページの役割
+
+詳細ページの前後に飛ばすボタン
+このパーツはPokemonPage.jsへ
+
+*/

@@ -7,3 +7,11 @@ export const Loading = () => {
 };
 
 export default Loading;
+
+/*
+このページの役割
+
+表示するまでのLoading
+どちらにも使われる
+
+*/

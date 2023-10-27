@@ -18,12 +18,7 @@ function IndexPage() {
         // Promiseの結果を待つ
         const result = await fetchPokemons();
 
-        console.log(result);
-
-        const pokemonData = result.results;
-
-        // 結果をセット
-        setPokemons(pokemonData);
+        setPokemons(result);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -52,3 +47,11 @@ function IndexPage() {
 }
 
 export default IndexPage;
+
+/*
+このページの役割
+
+トップページの設計するところ
+パーツを集めて作ったものを組み合わせる
+
+*/

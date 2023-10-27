@@ -13,6 +13,19 @@ export const getEvolutionChain = async (id) => {
   return chain;
 };
 
+//ここにタイプに関する処理が不備
+
+//chainの値がnull
+/*
+1
+1
+1
+1
+1
+1
+1
+1
+*/
 const PokemonEvolution = ({ pokemon }) => {
   const [chain, setChain] = useState(null);
 

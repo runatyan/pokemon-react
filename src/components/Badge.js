@@ -1,4 +1,5 @@
 // components/Badge.js
+//infoへ
 
 import React from "react";
 

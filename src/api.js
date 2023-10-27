@@ -8,7 +8,11 @@ export async function fetchPokemons() {
       "https://pokeapi.co/api/v2/pokemon?limit=10"
     );
 
-    if (!response.ok) {
+    // if (!response.ok) {
+    //   throw new Error("Fetch failed");
+    // }
+
+    if (response.status < 200 || response.status >= 300) {
       throw new Error("Fetch failed");
     }
 
@@ -19,7 +23,7 @@ export async function fetchPokemons() {
       return {
         ...result,
         id,
-        image: `https://pokeres.bastionbot.org/images/pokemon/${id}.png`,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
       };
     });
 
@@ -33,7 +37,11 @@ export async function fetchPokemon(id) {
   try {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
 
-    if (!response.ok) {
+    // if (!response.ok) {
+    //   throw new Error("Fetch failed");
+    // }
+
+    if (response.status < 200 || response.status >= 300) {
       throw new Error("Fetch failed");
     }
 
@@ -64,3 +72,11 @@ export const fetchEvolutionChain = async (id) => {
   );
   return response.data;
 };
+
+/*
+このページの役割
+
+pokeapiから情報を取ってくる。
+主にポケモンの情報を取ってくる。名前、id、画像...など
+
+*/

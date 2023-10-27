@@ -51,3 +51,11 @@ function PokemonPage() {
 }
 
 export default PokemonPage;
+
+/*
+このページの役割
+
+詳細ページの設計するところ
+パーツを集めて作ったものを組み合わせる
+
+*/
