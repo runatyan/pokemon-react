@@ -13,6 +13,7 @@ import PokemonInfo from "../features/pokemon/PokemonInfo";
 import PokemonStats from "../features/pokemon/PokemonStats";
 import PokemonEvolution from "../features/pokemon/PokemonEvolution";
 
+//ここではタイプ情報正常
 function PokemonDetail({ pokemon }) {
   useEffect(() => {
     fetchEvolutionChain(pokemon.id);

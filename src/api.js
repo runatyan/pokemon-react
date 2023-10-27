@@ -18,12 +18,14 @@ export async function fetchPokemons() {
 
     const data = response.data;
 
+    //ここにタイプがないから
     const results = data.results.map((result) => {
       const id = Number(result.url.split("/")[6]);
       return {
         ...result,
         id,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+        types: id.types.map((type) => type.type.name),
       };
     });
 

@@ -37,6 +37,7 @@ function IndexPage() {
     return <ErrorMessage message={error.message} />;
   }
 
+  //ここでタイプ追加ができていない
   return (
     <div>
       <h1>ポケモン一覧</h1>

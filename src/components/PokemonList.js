@@ -8,8 +8,6 @@ function PokemonList({ pokemons }) {
     return <p>No pokemons found.</p>;
   }
 
-  // console.log(pokemons);
-
   return (
     <div className="pokemon-list">
       {pokemons.map((pokemon) => (
