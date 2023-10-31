@@ -8,10 +8,6 @@ export async function fetchPokemons() {
       "https://pokeapi.co/api/v2/pokemon?limit=10"
     );
 
-    // if (!response.ok) {
-    //   throw new Error("Fetch failed");
-    // }
-
     if (response.status < 200 || response.status >= 300) {
       throw new Error("Fetch failed");
     }
@@ -25,7 +21,7 @@ export async function fetchPokemons() {
         ...result,
         id,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-        types: id.types.map((type) => type.type.name),
+        //types: result.types.map((type) => type.type.name),
       };
     });
 
@@ -38,10 +34,6 @@ export async function fetchPokemons() {
 export async function fetchPokemon(id) {
   try {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-
-    // if (!response.ok) {
-    //   throw new Error("Fetch failed");
-    // }
 
     if (response.status < 200 || response.status >= 300) {
       throw new Error("Fetch failed");
