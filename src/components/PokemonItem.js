@@ -18,7 +18,7 @@ function PokemonItem({ pokemon }) {
       <img src={pokemon.image} alt={pokemon.name} />
       <p>{pokemon.name}</p>
       <p>{pokemon.id}</p>
-      <p>{pokemon.type}</p>
+      <p>{pokemon.types}</p>
     </Link>
   );
 }
