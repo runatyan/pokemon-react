@@ -15,17 +15,33 @@ export async function fetchPokemons() {
     const data = response.data;
 
     //ここにタイプがないから
-    const results = data.results.map((result) => {
+    // const results = data.results.map((result) => {
+    //   const id = Number(result.url.split("/")[6]);
+    //   return {
+    //     ...result,
+    //     id,
+    //     image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+    //     //types: result.types.map((type) => type.type.name),
+    //   };
+    // });
+
+    // return results;
+
+    const pokemons = [];
+
+    for (let result of data.results) {
       const id = Number(result.url.split("/")[6]);
-      return {
+
+      const pokemon = await fetchPokemon(id); // 個別に呼び出し
+
+      pokemons.push({
         ...result,
         id,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-        //types: result.types.map((type) => type.type.name),
-      };
-    });
-
-    return results;
+        types: pokemon.types, // ここでタイプを取得
+      });
+    }
+    return pokemons;
   } catch (error) {
     throw new Error("Fetch Pokemons failed");
   }
