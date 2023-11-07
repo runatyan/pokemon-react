@@ -1,8 +1,9 @@
 // IndexPage.js
 
 import { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import { fetchPokemons } from "../api";
+import { fetchPokemons, fetchRandomPokemons } from "../api";
 import PokemonList from "../components/PokemonList";
 import Loading from "../features/ui/Loading";
 import ErrorMessage from "../features/ui/ErrorMessage";
@@ -12,6 +13,21 @@ function IndexPage() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [randomPokemons, setRandomPokemons] = useState([]);
+
+  useEffect(() => {
+    const fetchRandomData = async () => {
+      try {
+        const randomData = await fetchRandomPokemons(5);
+        setRandomPokemons(randomData);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    fetchRandomData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +58,31 @@ function IndexPage() {
   return (
     <div>
       <h1>ポケモン一覧</h1>
+
+      {/* ランダムなポケモンのスライダー */}
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {randomPokemons.map((pokemon) => (
+          <SwiperSlide key={pokemon.id}>
+            <div className="pokemon-slide">
+              <h2>{pokemon.name.toUpperCase()}</h2>
+              <p>#{String(pokemon.id).padStart(3, "0")}</p>
+              <img src={pokemon.image} alt={pokemon.name} />
+              <div className="pokemon-types">
+                {pokemon.types.map((type, index) => (
+                  <span key={index} className={`type ${type}`}>
+                    {type.toUpperCase()}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <PokemonList pokemons={pokemons} />
     </div>

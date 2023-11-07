@@ -71,6 +71,32 @@ export const fetchEvolutionChain = async (id) => {
   return response.data;
 };
 
+// ランダムなポケモンを取得する関数
+export async function fetchRandomPokemons(number) {
+  try {
+    // 全ポケモンの数を取得
+    const totalResponse = await axios.get(
+      "https://pokeapi.co/api/v2/pokemon-species/?limit=0"
+    );
+    const totalCount = totalResponse.data.count;
+
+    // ランダムなポケモンのIDを生成
+    const randomIds = new Set();
+    while (randomIds.size < number) {
+      const randomId = Math.floor(Math.random() * totalCount) + 1;
+      randomIds.add(randomId);
+    }
+
+    // ランダムなポケモンを取得
+    const promises = [...randomIds].map((id) => fetchPokemon(id));
+    const randomPokemons = await Promise.all(promises);
+
+    return randomPokemons;
+  } catch (error) {
+    throw new Error("Fetch random pokemons failed");
+  }
+}
+
 /*
 このページの役割
 
