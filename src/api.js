@@ -14,19 +14,6 @@ export async function fetchPokemons() {
 
     const data = response.data;
 
-    //ここにタイプがないから
-    // const results = data.results.map((result) => {
-    //   const id = Number(result.url.split("/")[6]);
-    //   return {
-    //     ...result,
-    //     id,
-    //     image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-    //     //types: result.types.map((type) => type.type.name),
-    //   };
-    // });
-
-    // return results;
-
     const pokemons = [];
 
     for (let result of data.results) {
@@ -80,6 +67,7 @@ export const fetchEvolutionChain = async (id) => {
   const response = await axios.get(
     `https://pokeapi.co/api/v2/evolution-chain/${id}/`
   );
+  //console.log(response);
   return response.data;
 };
 

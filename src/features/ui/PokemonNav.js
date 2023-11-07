@@ -1,16 +1,16 @@
 // PokemonNav.js
 
 import { Link } from "react-router-dom";
+import { fetchPokemon } from "../../api";
 
 function PokemonNav({ pokemon }) {
-  const prevLink = `/pokemon/${pokemon.prev}`;
-  const nextLink = `/pokemon/${pokemon.next}`;
+  const prevLink = pokemon.prev ? `/pokemon/${pokemon.prev}` : null;
+  const nextLink = pokemon.next ? `/pokemon/${pokemon.next}` : null;
 
   return (
     <div className="pokemon-nav">
-      <Link to={prevLink}>前のポケモン</Link>
-
-      <Link to={nextLink}>次のポケモン</Link>
+      {prevLink && <Link to={prevLink}>前のポケモン</Link>}
+      {nextLink && <Link to={nextLink}>次のポケモン</Link>}
     </div>
   );
 }

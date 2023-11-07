@@ -16,13 +16,20 @@ function PokemonPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const MAX_POKEMON_COUNT = 10;
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       try {
         const data = await fetchPokemon(id);
-        setPokemon(data);
+
+        // 前後のポケモンのIDを計算する
+        const prevId = data.id > 1 ? data.id - 1 : null;
+        const nextId = data.id < MAX_POKEMON_COUNT ? data.id + 1 : null;
+
+        setPokemon({ ...data, prev: prevId, next: nextId });
       } catch (err) {
         setError(err);
       } finally {

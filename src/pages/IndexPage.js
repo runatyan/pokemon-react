@@ -6,6 +6,7 @@ import { fetchPokemons } from "../api";
 import PokemonList from "../components/PokemonList";
 import Loading from "../features/ui/Loading";
 import ErrorMessage from "../features/ui/ErrorMessage";
+import PokemonSpecies from "../features/pokemon/PokemonSpecies";
 
 function IndexPage() {
   const [pokemons, setPokemons] = useState([]);
