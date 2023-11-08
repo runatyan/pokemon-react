@@ -3,9 +3,11 @@
 import axios from "axios";
 
 export async function fetchPokemons() {
+  const maxPokemonDate = 12;
+
   try {
     const response = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?limit=10"
+      `https://pokeapi.co/api/v2/pokemon?limit=${maxPokemonDate}`
     );
 
     if (response.status < 200 || response.status >= 300) {

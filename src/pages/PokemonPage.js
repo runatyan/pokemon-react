@@ -49,7 +49,7 @@ function PokemonPage() {
   }
 
   return (
-    <div>
+    <div className="inner">
       <PokemonNav pokemon={pokemon} />
 
       <PokemonDetail pokemon={pokemon} />

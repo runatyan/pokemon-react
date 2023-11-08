@@ -57,9 +57,6 @@ function IndexPage() {
   //ここでタイプ追加ができていない
   return (
     <div>
-      <h1>ポケモン一覧</h1>
-
-      {/* ランダムなポケモンのスライダー */}
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
@@ -70,7 +67,7 @@ function IndexPage() {
           <SwiperSlide key={pokemon.id}>
             <div className="pokemon-slide">
               <h2>{pokemon.name.toUpperCase()}</h2>
-              <p>#{String(pokemon.id).padStart(3, "0")}</p>
+              <p>#{pokemon.id.toString().padStart(4, "0")}</p>
               <img src={pokemon.image} alt={pokemon.name} />
               <div className="pokemon-types">
                 {pokemon.types.map((type, index) => (
@@ -83,8 +80,13 @@ function IndexPage() {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="inner">
+        <h1>ポケモン一覧</h1>
 
-      <PokemonList pokemons={pokemons} />
+        {/* ランダムなポケモンのスライダー */}
+
+        <PokemonList pokemons={pokemons} />
+      </div>
     </div>
   );
 }

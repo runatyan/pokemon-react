@@ -14,12 +14,20 @@ function PokemonItem({ pokemon }) {
   // }, [pokemon.id]);
 
   return (
-    <Link to={`/pokemon/${pokemon.name}`}>
-      <img src={pokemon.image} alt={pokemon.name} />
-      <p>{pokemon.name}</p>
-      <p>{pokemon.id}</p>
-      <p>{pokemon.types}</p>
-    </Link>
+    <div className="pokemon-item">
+      <Link to={`/pokemon/${pokemon.name}`}>
+        <img src={pokemon.image} alt={pokemon.name} />
+        <p>{pokemon.name}</p>
+        <p>{`#${pokemon.id.toString().padStart(4, "0")}`}</p>
+        <div className="pokemon-types">
+          {pokemon.types.map((type, index) => (
+            <span key={index} className={`type ${type}`}>
+              {type.toUpperCase()}
+            </span>
+          ))}
+        </div>
+      </Link>
+    </div>
   );
 }
 
