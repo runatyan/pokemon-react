@@ -14,6 +14,7 @@ import Loading from "../features/ui/Loading";
 import ErrorMessage from "../features/ui/ErrorMessage";
 import PokemonSpecies from "../features/pokemon/PokemonSpecies";
 
+//ファーストページの内容を全て持つところ
 function IndexPage() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ function IndexPage() {
   const [sortOrder, setSortOrder] = useState("number_asc");
   const [displayLimit, setDisplayLimit] = useState(20); // 最初に表示するポケモンの数
   const [totalPokemons, setTotalPokemons] = useState(0); // ポケモンの総数
-  const [isLoadMore, setIsLoadMore] = useState(false); // 新しいステートを追加
+  const [isLoadMore, setIsLoadMore] = useState(false);
 
   // プルダウンの選択が変わるたびに実行されるハンドラー
   const handleSortChange = (e) => {
@@ -74,7 +75,6 @@ function IndexPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Promiseの結果を待つ
         const result = await fetchPokemons();
 
         setPokemons(result);
@@ -161,7 +161,6 @@ function IndexPage() {
     return <ErrorMessage message={error.message} />;
   }
 
-  //ここでタイプ追加ができていない
   return (
     <div>
       <Swiper
@@ -193,9 +192,8 @@ function IndexPage() {
           <option value="number_asc">番号の早い順</option>
           <option value="number_desc">番号の遅い順</option>
           <option value="name_asc">ABC順</option>
-          {/* 他のソートオプションのoptionをここに追加 */}
         </select>
-        {/* ランダムなポケモンのスライダー */}
+
         <PokemonList pokemons={isLoadMore ? pokemons : pokemons.slice(0, 20)} />
         {!isLoadMore && (
           <button onClick={handleLoadMoreClick}>もっと見る</button>

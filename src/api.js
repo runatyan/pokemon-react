@@ -2,6 +2,7 @@
 
 import axios from "axios";
 
+//ファーストページの表示取得元
 export async function fetchPokemons(limit = 100, offset = 0) {
   try {
     const response = await axios.get(
@@ -25,7 +26,7 @@ export async function fetchPokemons(limit = 100, offset = 0) {
         ...result,
         id,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-        types: pokemon.types, // ここでタイプを取得
+        types: pokemon.types,
       });
     }
     return pokemons;
@@ -34,6 +35,7 @@ export async function fetchPokemons(limit = 100, offset = 0) {
   }
 }
 
+//個別ページの表示取得元
 export async function fetchPokemon(id) {
   try {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -63,13 +65,21 @@ export async function fetchPokemon(id) {
   }
 }
 
+//進化情報の表示取得元
 export const fetchEvolutionChain = async (id) => {
-  const response = await axios.get(
-    `https://pokeapi.co/api/v2/evolution-chain/${id}/`
-  );
-  console.log(id);
-  console.log(response);
-  return response.data;
+  try {
+    // まず、ポケモンの種に関する情報を取得
+    const speciesResponse = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon-species/${id}/`
+    );
+    // 種から進化チェーンのURLを取得
+    const evolutionChainUrl = speciesResponse.data.evolution_chain.url;
+    // 進化チェーンの詳細情報を取得
+    const evolutionChainResponse = await axios.get(evolutionChainUrl);
+    return evolutionChainResponse.data; // 進化チェーンのデータを返す
+  } catch (error) {
+    throw new Error(`Fetch evolution chain failed: ${error.message}`);
+  }
 };
 
 // ランダムなポケモンを取得する関数
@@ -98,7 +108,7 @@ export async function fetchRandomPokemons(number) {
   }
 }
 
-// ポケモンの総数を取得するための関数を追加
+// ポケモンの総数を取得するための関数
 export async function fetchTotalPokemonCount() {
   try {
     const response = await axios.get(
