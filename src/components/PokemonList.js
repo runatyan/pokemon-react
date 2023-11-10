@@ -8,9 +8,6 @@ function PokemonList({ pokemons }) {
     return <p>No pokemons found.</p>;
   }
 
-  //ここでタイプ情報がない
-  //console.log(pokemons);
-
   return (
     <div className="pokemon-list">
       {pokemons.map((pokemon) => (

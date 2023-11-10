@@ -69,7 +69,8 @@ export const fetchEvolutionChain = async (id) => {
   const response = await axios.get(
     `https://pokeapi.co/api/v2/evolution-chain/${id}/`
   );
-  //console.log(response);
+  console.log(id);
+  console.log(response);
   return response.data;
 };
 

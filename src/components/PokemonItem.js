@@ -5,14 +5,6 @@ import { fetchPokemons } from "../api";
 import { Link } from "react-router-dom";
 
 function PokemonItem({ pokemon }) {
-  // const [type, setType] = useState();
-
-  // useEffect(() => {
-  //   fetchPokemons(pokemon.id).then((data) => {
-  //     setType(data.types[0].type.name);
-  //   });
-  // }, [pokemon.id]);
-
   return (
     <div className="pokemon-item">
       <Link to={`/pokemon/${pokemon.name}`}>
