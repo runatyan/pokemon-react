@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+}
+
 .inner {
   width: 70%;
   max-width: 1920px;

@@ -2,8 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import axios from "axios";
 
-import { fetchPokemons, fetchRandomPokemons } from "../api";
+import {
+  fetchPokemons,
+  fetchRandomPokemons,
+  fetchTotalPokemonCount,
+} from "../api";
 import PokemonList from "../components/PokemonList";
 import Loading from "../features/ui/Loading";
 import ErrorMessage from "../features/ui/ErrorMessage";
@@ -16,11 +21,19 @@ function IndexPage() {
 
   const [randomPokemons, setRandomPokemons] = useState([]);
   const [sortOrder, setSortOrder] = useState("number_asc");
+  const [displayLimit, setDisplayLimit] = useState(20); // 最初に表示するポケモンの数
+  const [totalPokemons, setTotalPokemons] = useState(0); // ポケモンの総数
+  const [isLoadMore, setIsLoadMore] = useState(false); // 新しいステートを追加
 
   // プルダウンの選択が変わるたびに実行されるハンドラー
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
     sortPokemons(e.target.value);
+  };
+
+  // 'もっと見る'をクリックしたときに実行される関数
+  const handleLoadMoreClick = () => {
+    setIsLoadMore(true);
   };
 
   // ポケモンの並び替えを行う関数
@@ -75,6 +88,71 @@ function IndexPage() {
     fetchData();
   }, []);
 
+  // ポケモンの総数を取得する
+  useEffect(() => {
+    fetchTotalPokemonCount();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllPokemons = async () => {
+      if (isLoadMore) {
+        try {
+          // 全てのポケモンを取得する
+          const allPokemons = await fetchPokemons();
+          setPokemons(allPokemons);
+        } catch (error) {
+          setError(error);
+        }
+      }
+    };
+
+    fetchAllPokemons();
+  }, [isLoadMore]); // isLoadMoreが変更されたときにのみ実行
+
+  const getTotalPokemonCount = async () => {
+    // 名前を変更しました
+    try {
+      const totalCount = await fetchTotalPokemonCount(); // 正しい関数を呼び出し
+      setTotalPokemons(totalCount);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  // useEffect内でこの新しい関数名を使用
+  useEffect(() => {
+    getTotalPokemonCount();
+  }, []);
+
+  // 「もっと見る」ボタンのクリックイベント
+  const handleLoadMore = async () => {
+    try {
+      const morePokemons = await fetchPokemons(totalPokemons, displayLimit);
+      setPokemons(morePokemons);
+      setDisplayLimit(totalPokemons); // 表示制限を総数に更新する
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  // ポケモンを取得する関数を変更
+  const fetchData = async (limit) => {
+    try {
+      // ポケモンを取得して状態を更新する
+      const result = await fetchPokemons(limit);
+      setPokemons(result);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    }
+  };
+
+  // useEffectを修正して、指定された数だけポケモンを取得する
+  useEffect(() => {
+    fetchData(displayLimit);
+  }, [displayLimit]);
+
   if (loading) {
     return <Loading />;
   }
@@ -118,8 +196,10 @@ function IndexPage() {
           {/* 他のソートオプションのoptionをここに追加 */}
         </select>
         {/* ランダムなポケモンのスライダー */}
-
-        <PokemonList pokemons={pokemons} />
+        <PokemonList pokemons={isLoadMore ? pokemons : pokemons.slice(0, 20)} />
+        {!isLoadMore && (
+          <button onClick={handleLoadMoreClick}>もっと見る</button>
+        )}
       </div>
     </div>
   );

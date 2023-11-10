@@ -16,7 +16,7 @@ function PokemonPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const MAX_POKEMON_COUNT = 10;
+  const MAX_POKEMON_COUNT = 100;
 
   useEffect(() => {
     const fetchData = async () => {

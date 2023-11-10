@@ -2,12 +2,10 @@
 
 import axios from "axios";
 
-export async function fetchPokemons() {
-  const maxPokemonDate = 12;
-
+export async function fetchPokemons(limit = 100, offset = 0) {
   try {
     const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?limit=${maxPokemonDate}`
+      `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
     );
 
     if (response.status < 200 || response.status >= 300) {
@@ -97,6 +95,18 @@ export async function fetchRandomPokemons(number) {
     return randomPokemons;
   } catch (error) {
     throw new Error("Fetch random pokemons failed");
+  }
+}
+
+// ポケモンの総数を取得するための関数を追加
+export async function fetchTotalPokemonCount() {
+  try {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon-species/?limit=0`
+    );
+    return response.data.count;
+  } catch (error) {
+    throw new Error("Fetch total pokemon count failed");
   }
 }
 
