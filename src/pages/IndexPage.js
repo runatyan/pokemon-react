@@ -15,6 +15,35 @@ function IndexPage() {
   const [error, setError] = useState(null);
 
   const [randomPokemons, setRandomPokemons] = useState([]);
+  const [sortOrder, setSortOrder] = useState("number_asc");
+
+  // プルダウンの選択が変わるたびに実行されるハンドラー
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+    sortPokemons(e.target.value);
+  };
+
+  // ポケモンの並び替えを行う関数
+  const sortPokemons = (order) => {
+    let sortedPokemons;
+    switch (order) {
+      case "number_asc":
+        sortedPokemons = [...pokemons].sort((a, b) => a.id - b.id);
+        break;
+      case "number_desc":
+        sortedPokemons = [...pokemons].sort((a, b) => b.id - a.id);
+        break;
+      case "name_asc":
+        sortedPokemons = [...pokemons].sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+        break;
+      // 他のソートオプションもここに追加
+      default:
+        sortedPokemons = [...pokemons];
+    }
+    setPokemons(sortedPokemons);
+  };
 
   useEffect(() => {
     const fetchRandomData = async () => {
@@ -79,10 +108,15 @@ function IndexPage() {
             </div>
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper>{" "}
       <div className="inner">
         <h1>ポケモン一覧</h1>
-
+        <select value={sortOrder} onChange={handleSortChange}>
+          <option value="number_asc">番号の早い順</option>
+          <option value="number_desc">番号の遅い順</option>
+          <option value="name_asc">ABC順</option>
+          {/* 他のソートオプションのoptionをここに追加 */}
+        </select>
         {/* ランダムなポケモンのスライダー */}
 
         <PokemonList pokemons={pokemons} />
