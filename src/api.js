@@ -87,6 +87,7 @@ export const fetchEvolutionChain = async (id) => {
       );
       chainData.push({
         name: pokemonData.name,
+        id: pokemonData.id,
         image: pokemonData.sprites.front_default,
         types: pokemonData.types.map((typeInfo) => typeInfo.type.name),
       });

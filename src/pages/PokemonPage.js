@@ -2,6 +2,7 @@
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { fetchPokemon, fetchPokemonSpecies } from "../api";
 import PokemonDetail from "../components/PokemonDetail";
@@ -24,15 +25,18 @@ function PokemonPage() {
 
       try {
         const data = await fetchPokemon(id);
+        const speciesData = await fetchPokemonSpecies(id);
 
         // 前後のポケモンのIDを計算する
         const prevId = data.id > 1 ? data.id - 1 : null;
         const nextId = data.id < MAX_POKEMON_COUNT ? data.id + 1 : null;
 
-        setPokemon({ ...data, prev: prevId, next: nextId });
-
-        const speciesData = await fetchPokemonSpecies(id);
-        setPokemon({ ...data, species: speciesData });
+        setPokemon({
+          ...data,
+          prev: prevId,
+          next: nextId,
+          species: speciesData,
+        });
       } catch (err) {
         setError(err);
       } finally {
@@ -53,6 +57,10 @@ function PokemonPage() {
 
   return (
     <div className="inner">
+      <div className="row">
+        <Link to={`/`}>TOP</Link>
+        <p>{`＞${pokemon.name}`}</p>
+      </div>
       <PokemonNav pokemon={pokemon} />
 
       <PokemonDetail pokemon={pokemon} />

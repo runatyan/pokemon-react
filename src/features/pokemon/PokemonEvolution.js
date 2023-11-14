@@ -2,18 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import { fetchEvolutionChain } from "../../api";
+import { Link } from "react-router-dom";
 
 export const getEvolutionChain = async (id) => {
   const data = await fetchEvolutionChain(id);
 
   const chain = []; // 進化チェーンを格納する配列
 
-  //console.log(data);
-
   // 最初のポケモンを取得
   const firstPokemon = {
     name: data.chain.species.name,
     url: data.chain.species.url,
+    id: data.chain.species.id,
   };
 
   chain.push(firstPokemon); // 最初のポケモンをチェーンに追加
@@ -30,6 +30,7 @@ export const getEvolutionChain = async (id) => {
         const evolvedPokemon = {
           name: evolution.species.name,
           url: evolution.species.url,
+          id: data.chain.species.id,
         };
 
         chain.push(evolvedPokemon); // 進化したポケモンをチェーンに追加
@@ -63,15 +64,17 @@ const PokemonEvolution = ({ pokemon }) => {
     <div className="evolution__row">
       {evolutionChain.map((evolution) => (
         <div key={evolution.name}>
-          <h4>{evolution.name}</h4>
-          <img src={evolution.image} alt={evolution.name} />
-          <div className="pokemon-types">
-            {evolution.types.map((type, index) => (
-              <span key={index} className={`type ${type}`}>
-                {type.toUpperCase()}
-              </span>
-            ))}
-          </div>
+          <Link to={`/pokemon/${evolution.id}`}>
+            <h4>{evolution.name}</h4>
+            <img src={evolution.image} alt={evolution.name} />
+            <div className="pokemon-types">
+              {evolution.types.map((type, index) => (
+                <span key={index} className={`type ${type}`}>
+                  {type.toUpperCase()}
+                </span>
+              ))}
+            </div>{" "}
+          </Link>
         </div>
       ))}
     </div>

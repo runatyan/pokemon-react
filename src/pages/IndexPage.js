@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import {
   fetchPokemons,
@@ -171,18 +172,20 @@ function IndexPage() {
       >
         {randomPokemons.map((pokemon) => (
           <SwiperSlide key={pokemon.id}>
-            <div className="pokemon-slide">
-              <h2>{pokemon.name.toUpperCase()}</h2>
-              <p>#{pokemon.id.toString().padStart(4, "0")}</p>
-              <img src={pokemon.image} alt={pokemon.name} />
-              <div className="pokemon-types">
-                {pokemon.types.map((type, index) => (
-                  <span key={index} className={`type ${type}`}>
-                    {type.toUpperCase()}
-                  </span>
-                ))}
+            <Link to={`/pokemon/${pokemon.id}`}>
+              <div className="pokemon-slide">
+                <h2>{pokemon.name.toUpperCase()}</h2>
+                <p>#{pokemon.id.toString().padStart(4, "0")}</p>
+                <img src={pokemon.image} alt={pokemon.name} />
+                <div className="pokemon-types">
+                  {pokemon.types.map((type, index) => (
+                    <span key={index} className={`type ${type}`}>
+                      {type.toUpperCase()}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>{" "}

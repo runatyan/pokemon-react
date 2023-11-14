@@ -13,8 +13,6 @@ const PokemonInfo = ({ pokemon }) => {
   const entries = pokemon.species.flavor_text_entries;
   const version = pokemon.version;
 
-  console.log(version);
-
   return (
     <div>
       <h2>{name}</h2>

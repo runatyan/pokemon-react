@@ -44,6 +44,11 @@ a {
   justify-content: space-between;
 }
 
+.row {
+  display: flex;
+  align-items: center;
+}
+
 .type {
   display: inline-block;
   padding: 5px 10px;
