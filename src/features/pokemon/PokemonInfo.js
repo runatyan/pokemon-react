@@ -10,6 +10,10 @@ const PokemonInfo = ({ pokemon }) => {
   const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
   const height = pokemon.height;
   const weight = pokemon.weight;
+  const entries = pokemon.species.flavor_text_entries;
+  const version = pokemon.version;
+
+  console.log(version);
 
   return (
     <div>
@@ -25,6 +29,20 @@ const PokemonInfo = ({ pokemon }) => {
       <p>#{id}</p>
       <p>高さ:{height / 10}m</p>
       <p>重さ:{weight / 10}kg</p>
+      <p>分類: {pokemon.species.genera[0].genus}</p>
+      <div>
+        {entries.map((entry, index) => (
+          <p key={index}>{entry.flavor_text}</p>
+        ))}
+      </div>
+      <div className="pokemon-versions">
+        <h3>登場バージョン：</h3>
+        <ul>
+          {version.map((gameIndex, index) => (
+            <li key={index}>{gameIndex}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

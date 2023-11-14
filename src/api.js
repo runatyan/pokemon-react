@@ -57,6 +57,7 @@ export async function fetchPokemon(id) {
         name: stat.stat.name,
         value: stat.base_stat,
       })),
+      version: data.game_indices.map((version) => version.version.name),
     };
 
     return pokemon;
@@ -68,17 +69,46 @@ export async function fetchPokemon(id) {
 //進化情報の表示取得元
 export const fetchEvolutionChain = async (id) => {
   try {
-    // まず、ポケモンの種に関する情報を取得
     const speciesResponse = await axios.get(
       `https://pokeapi.co/api/v2/pokemon-species/${id}/`
     );
-    // 種から進化チェーンのURLを取得
     const evolutionChainUrl = speciesResponse.data.evolution_chain.url;
-    // 進化チェーンの詳細情報を取得
     const evolutionChainResponse = await axios.get(evolutionChainUrl);
-    return evolutionChainResponse.data; // 進化チェーンのデータを返す
+    const evolutionData = evolutionChainResponse.data;
+
+    // 進化チェーン内の各ポケモンの詳細を取得
+    let chainData = [];
+    let currentEvolution = evolutionData.chain;
+
+    do {
+      // ポケモンのデータを取得する関数を呼び出す
+      const pokemonData = await fetchPokemonByName(
+        currentEvolution.species.name
+      );
+      chainData.push({
+        name: pokemonData.name,
+        image: pokemonData.sprites.front_default,
+        types: pokemonData.types.map((typeInfo) => typeInfo.type.name),
+      });
+
+      currentEvolution = currentEvolution["evolves_to"][0];
+    } while (!!currentEvolution && currentEvolution.hasOwnProperty("species"));
+
+    return chainData;
   } catch (error) {
     throw new Error(`Fetch evolution chain failed: ${error.message}`);
+  }
+};
+
+// ポケモンの名前からポケモンの詳細を取得する関数
+export const fetchPokemonByName = async (name) => {
+  try {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(`Fetch pokemon by name failed: ${error.message}`);
   }
 };
 
@@ -117,6 +147,30 @@ export async function fetchTotalPokemonCount() {
     return response.data.count;
   } catch (error) {
     throw new Error("Fetch total pokemon count failed");
+  }
+}
+
+export async function fetchPokemonSpecies(id) {
+  try {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon-species/${id}/`
+    );
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error("Fetch failed");
+    }
+    const speciesData = response.data;
+
+    // 日本語の説明をフィルタリング
+    const japaneseDescriptions = speciesData.flavor_text_entries.filter(
+      (entry) => entry.language.name === "ja"
+    );
+
+    return {
+      ...speciesData,
+      flavor_text_entries: japaneseDescriptions,
+    };
+  } catch (error) {
+    throw new Error("Fetch Pokemon species failed");
   }
 }
 

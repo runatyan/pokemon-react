@@ -3,7 +3,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { fetchPokemon } from "../api";
+import { fetchPokemon, fetchPokemonSpecies } from "../api";
 import PokemonDetail from "../components/PokemonDetail";
 import PokemonNav from "../features/ui/PokemonNav";
 import Loading from "../features/ui/Loading";
@@ -30,6 +30,9 @@ function PokemonPage() {
         const nextId = data.id < MAX_POKEMON_COUNT ? data.id + 1 : null;
 
         setPokemon({ ...data, prev: prevId, next: nextId });
+
+        const speciesData = await fetchPokemonSpecies(id);
+        setPokemon({ ...data, species: speciesData });
       } catch (err) {
         setError(err);
       } finally {

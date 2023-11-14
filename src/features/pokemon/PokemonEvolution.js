@@ -48,15 +48,34 @@ export const getEvolutionChain = async (id) => {
 };
 
 const PokemonEvolution = ({ pokemon }) => {
-  const [chain, setChain] = useState(null);
+  const [evolutionChain, setEvolutionChain] = useState([]);
 
   useEffect(() => {
-    getEvolutionChain(pokemon.id).then((c) => {
-      setChain(c);
-    });
+    const fetchEvolutionData = async () => {
+      const chainData = await fetchEvolutionChain(pokemon.id);
+      setEvolutionChain(chainData);
+    };
+
+    fetchEvolutionData();
   }, [pokemon.id]);
 
-  return <div>{chain && chain.map((p) => <p key={p.name}>{p.name}</p>)}</div>;
+  return (
+    <div className="evolution__row">
+      {evolutionChain.map((evolution) => (
+        <div key={evolution.name}>
+          <h4>{evolution.name}</h4>
+          <img src={evolution.image} alt={evolution.name} />
+          <div className="pokemon-types">
+            {evolution.types.map((type, index) => (
+              <span key={index} className={`type ${type}`}>
+                {type.toUpperCase()}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default PokemonEvolution;
