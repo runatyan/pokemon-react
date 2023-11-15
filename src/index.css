@@ -51,10 +51,6 @@ a {
   padding: 30px;
 }
 
-.pokemon-slide {
-  width: 30%;
-}
-
 .pokemon-nav {
   display: flex;
   align-items: center;

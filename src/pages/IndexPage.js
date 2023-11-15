@@ -1,11 +1,9 @@
 // IndexPage.js
 
 import { useState, useEffect } from "react";
-import { Swiper, SwiperSlide, Pagination } from "swiper/react";
-
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 import {
@@ -16,7 +14,6 @@ import {
 import PokemonList from "../components/PokemonList";
 import Loading from "../features/ui/Loading";
 import ErrorMessage from "../features/ui/ErrorMessage";
-import PokemonSpecies from "../features/pokemon/PokemonSpecies";
 
 //ファーストページの内容を全て持つところ
 function IndexPage() {

@@ -1,7 +1,6 @@
 // PokemonNav.js
 
 import { Link } from "react-router-dom";
-import { fetchPokemon } from "../../api";
 
 function PokemonNav({ pokemon }) {
   const prevLink = pokemon.prev ? `/pokemon/${pokemon.prev}` : null;

@@ -4,9 +4,6 @@ import { useEffect } from "react";
 
 import React from "react";
 
-// import文を修正
-import { fetchPokemon, fetchPokemons } from "../api";
-
 import { fetchEvolutionChain } from "../api";
 
 import PokemonInfo from "../features/pokemon/PokemonInfo";

@@ -1,7 +1,5 @@
 // PokemonItem.js
 //この内容はListへ
-import { useEffect, useState } from "react";
-import { fetchPokemons } from "../api";
 import { Link } from "react-router-dom";
 
 function PokemonItem({ pokemon }) {
