@@ -66,7 +66,6 @@ export async function fetchPokemon(id) {
   }
 }
 
-//進化情報の表示取得元
 export const fetchEvolutionChain = async (id) => {
   try {
     const speciesResponse = await axios.get(
@@ -76,15 +75,12 @@ export const fetchEvolutionChain = async (id) => {
     const evolutionChainResponse = await axios.get(evolutionChainUrl);
     const evolutionData = evolutionChainResponse.data;
 
-    // 進化チェーン内の各ポケモンの詳細を取得
     let chainData = [];
     let currentEvolution = evolutionData.chain;
 
-    do {
-      // ポケモンのデータを取得する関数を呼び出す
-      const pokemonData = await fetchPokemonByName(
-        currentEvolution.species.name
-      );
+    const processEvolution = async (evolution) => {
+      if (!evolution) return;
+      const pokemonData = await fetchPokemonByName(evolution.species.name);
       chainData.push({
         name: pokemonData.name,
         id: pokemonData.id,
@@ -92,8 +88,13 @@ export const fetchEvolutionChain = async (id) => {
         types: pokemonData.types.map((typeInfo) => typeInfo.type.name),
       });
 
-      currentEvolution = currentEvolution["evolves_to"][0];
-    } while (!!currentEvolution && currentEvolution.hasOwnProperty("species"));
+      // 全ての進化先に対して再帰的に処理
+      for (let nextEvolution of evolution.evolves_to) {
+        await processEvolution(nextEvolution);
+      }
+    };
+
+    await processEvolution(currentEvolution);
 
     return chainData;
   } catch (error) {

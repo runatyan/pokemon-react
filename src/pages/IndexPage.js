@@ -1,7 +1,10 @@
 // IndexPage.js
 
 import { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, Pagination } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/pagination";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -166,12 +169,13 @@ function IndexPage() {
     <div>
       <Swiper
         spaceBetween={50}
-        slidesPerView={1}
+        slidesPerView={3}
+        loop={true}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
         {randomPokemons.map((pokemon) => (
-          <SwiperSlide key={pokemon.id}>
+          <SwiperSlide key={pokemon.id} className="random-slide">
             <Link to={`/pokemon/${pokemon.id}`}>
               <div className="pokemon-slide">
                 <h2>{pokemon.name.toUpperCase()}</h2>
@@ -199,7 +203,9 @@ function IndexPage() {
 
         <PokemonList pokemons={isLoadMore ? pokemons : pokemons.slice(0, 20)} />
         {!isLoadMore && (
-          <button onClick={handleLoadMoreClick}>もっと見る</button>
+          <button className="more-btn" onClick={handleLoadMoreClick}>
+            もっと見る
+          </button>
         )}
       </div>
     </div>

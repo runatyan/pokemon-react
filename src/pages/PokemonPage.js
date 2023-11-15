@@ -17,6 +17,7 @@ function PokemonPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  //ここの値が表示件数分に変える必要がある
   const MAX_POKEMON_COUNT = 100;
 
   useEffect(() => {

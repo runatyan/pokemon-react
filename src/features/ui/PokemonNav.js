@@ -9,8 +9,8 @@ function PokemonNav({ pokemon }) {
 
   return (
     <div className="pokemon-nav">
-      {prevLink && <Link to={prevLink}>前のポケモン</Link>}
-      {nextLink && <Link to={nextLink}>次のポケモン</Link>}
+      {prevLink && <Link to={prevLink}>＜前のポケモン</Link>}
+      {nextLink && <Link to={nextLink}>次のポケモン＞</Link>}
     </div>
   );
 }
