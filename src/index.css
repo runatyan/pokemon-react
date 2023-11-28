@@ -76,9 +76,9 @@ a {
   width: 60%;
 }
 
-.t-pokemon_img {
+/* .t-pokemon_img {
   width: 100%;
-}
+} */
 
 .t-pokemon_number {
   color: #888;
@@ -86,11 +86,11 @@ a {
   margin: 0;
 }
 
-.t-poekmon_name {
+/* .t-poekmon_name {
   margin: 3px 0 0 0;
   font-size: 25px;
   font-weight: bold;
-}
+} */
 
 .evolution__row {
   display: flex;
