@@ -18,7 +18,7 @@ function PokemonPage() {
   const [error, setError] = useState(null);
 
   //ここの値が表示件数分に変える必要がある
-  const MAX_POKEMON_COUNT = 100;
+  const MAX_POKEMON_COUNT = 200;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +58,7 @@ function PokemonPage() {
 
   return (
     <div className="inner">
-      <div className="row">
+      <div className="flex items-center my-3">
         <Link to={`/`}>TOP</Link>
         <p>{`＞${pokemon.name}`}</p>
       </div>

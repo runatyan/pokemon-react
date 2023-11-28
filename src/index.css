@@ -53,38 +53,37 @@ a {
   display: flex;
 }
 
-.random-slide {
-  width: 30%;
+/* .random-slide {
   border: 1px solid #000;
   padding: 30px;
-}
+} */
 
-.pokemon-nav {
+/* .pokemon-nav {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 30px;
   background-color: #aaa;
-}
+} */
 
-.pokemon-img {
+/* .pokemon-img {
   width: 40%;
 }
 
 .pokemon-contents {
   width: 60%;
-}
+} */
 
 /* .t-pokemon_img {
   width: 100%;
 } */
 
-.t-pokemon_number {
+/* .t-pokemon_number {
   color: #888;
   font-size: 12px;
   margin: 0;
-}
+} */
 
 /* .t-poekmon_name {
   margin: 3px 0 0 0;
@@ -98,10 +97,10 @@ a {
   justify-content: space-between;
 }
 
-.row {
+/* .row {
   display: flex;
   align-items: center;
-}
+} */
 
 .type {
   display: inline-block;

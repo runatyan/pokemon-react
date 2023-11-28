@@ -93,7 +93,7 @@ function IndexPage() {
   }
 
   const swiperConfig = {
-    spaceBetween: 50,
+    spaceBetween: 100,
     slidesPerView: 3,
     loop: true,
     onSlideChange: () => console.log("slide change"),
@@ -104,12 +104,20 @@ function IndexPage() {
     <div>
       <Swiper {...swiperConfig}>
         {randomPokemons.map((pokemon) => (
-          <SwiperSlide key={pokemon.id} className="random-slide">
+          <SwiperSlide key={pokemon.id}>
             <Link to={`/pokemon/${pokemon.id}`}>
-              <div className="pokemon-slide">
-                <h2>{pokemon.name.toUpperCase()}</h2>
-                <p>#{pokemon.id.toString().padStart(4, "0")}</p>
-                <img src={pokemon.image} alt={pokemon.name} />
+              <div className="pokemon-slide p-10 w-full  bg-gray-200 rounded-3xl">
+                <h2 className="font-bold text-xl mb-2">
+                  {pokemon.name.toUpperCase()}
+                </h2>
+                <p className="text-xs text-gray-400">
+                  #{pokemon.id.toString().padStart(4, "0")}
+                </p>
+                <img
+                  className="w-1/2 block my-0 mx-auto"
+                  src={pokemon.image}
+                  alt={pokemon.name}
+                />
                 <div className="pokemon-types">
                   {pokemon.types.map((type, index) => (
                     <span key={index} className={`type ${type}`}>
@@ -123,8 +131,12 @@ function IndexPage() {
         ))}
       </Swiper>
       <div className="inner">
-        <h1>ポケモン一覧</h1>
-        <select value={sortOrder} onChange={handleSortChange}>
+        <h1 className="text-3xl font-bold mt-8 mb-6">ポケモン一覧</h1>
+        <select
+          className="bg-gray-200 p-1 rounded-3xl mb-4"
+          value={sortOrder}
+          onChange={handleSortChange}
+        >
           <option value="number_asc">番号の早い順</option>
           <option value="number_desc">番号の遅い順</option>
           <option value="name_asc">ABC順</option>
@@ -138,7 +150,10 @@ function IndexPage() {
           }
         />
         {!isLoadMore && (
-          <button className="more-btn" onClick={handleLoadMoreClick}>
+          <button
+            className="more-btn p-4 rounded-3xl border border-black"
+            onClick={handleLoadMoreClick}
+          >
             もっと見る
           </button>
         )}

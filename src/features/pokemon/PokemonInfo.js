@@ -18,29 +18,37 @@ const PokemonInfo = ({ pokemon }) => {
 
   return (
     <div>
-      <h2>{name}</h2>
-      <p>#{id}</p>
-      <div className="row">
-        <img className="pokemon-img" src={image} alt={pokemon.name} />
-        <div className="pokemon-contents">
+      <h2 className="text-4xl font-bold my-4">{name}</h2>
+      <p className="text-gray-400 text-lg mb-7">#{id}</p>
+      <div className="flex justify-between mb-10">
+        <img
+          className="w-2/6 bg-gray-200 rounded-3xl"
+          src={image}
+          alt={pokemon.name}
+        />
+        <div className="pokemon-contents w-3/5 p-5 rounded-3xl bg-gray-200">
           <div>
-            <p>分類: {pokemon.species.genera[0].genus}</p>
-            <div className="pokemon-types">
+            <p className="mb-3">分類: {pokemon.species.genera[0].genus}</p>
+            <div className="pokemon-types mb-3">
               {types.map((type, index) => (
                 <span key={index} className={`type ${type}`}>
                   {type.toUpperCase()}
                 </span>
               ))}
             </div>
-            <p>高さ:{height / 10}m</p>
-            <p>重さ:{weight / 10}kg</p>
-            <div className="pokemon-ver">
+            <p className="mb-3">高さ:{height / 10}m</p>
+            <p className="mb-3">重さ:{weight / 10}kg</p>
+            <div className="pokemon-ver mb-3">
               {version.map((gameIndex, index) => (
                 <span key={index}>{gameIndex}、</span>
               ))}
             </div>
           </div>
-          <Swiper spaceBetween={50} slidesPerView={1}>
+          <Swiper
+            className="bg-gray-50 p-3 "
+            spaceBetween={50}
+            slidesPerView={1}
+          >
             {entries.map((entry, index) => (
               <SwiperSlide key={index} className="pokemon-slide">
                 <p key={index}>{entry.flavor_text}</p>

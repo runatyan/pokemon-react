@@ -3,7 +3,7 @@
 import axios from "axios";
 
 //ファーストページの表示取得元
-export async function fetchPokemons(limit = 100, offset = 0) {
+export async function fetchPokemons(limit = 200, offset = 0) {
   try {
     const response = await axios.get(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`

@@ -61,12 +61,16 @@ const PokemonEvolution = ({ pokemon }) => {
   }, [pokemon.id]);
 
   return (
-    <div className="evolution__row">
+    <div className="flex justify-between mt-10">
       {evolutionChain.map((evolution) => (
-        <div key={evolution.name}>
+        <div className="w-1/6" key={evolution.name}>
           <Link to={`/pokemon/${evolution.id}`}>
-            <h4>{evolution.name}</h4>
-            <img src={evolution.image} alt={evolution.name} />
+            <img
+              className="w-full p-1 bg-gray-200 rounded-3xl mb-2"
+              src={evolution.image}
+              alt={evolution.name}
+            />
+            <h4 className="font-bold text-lg mb-2">{evolution.name}</h4>
             <div className="pokemon-types">
               {evolution.types.map((type, index) => (
                 <span key={index} className={`type ${type}`}>

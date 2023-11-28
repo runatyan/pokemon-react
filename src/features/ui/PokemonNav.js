@@ -7,7 +7,7 @@ function PokemonNav({ pokemon }) {
   const nextLink = pokemon.next ? `/pokemon/${pokemon.next}` : null;
 
   return (
-    <div className="pokemon-nav">
+    <div className="pokemon-nav bg-gray-300 flex items-center justify-between flex-wrap p-7 rounded-3xl">
       {prevLink && <Link to={prevLink}>＜前のポケモン</Link>}
       {nextLink && <Link to={nextLink}>次のポケモン＞</Link>}
     </div>
