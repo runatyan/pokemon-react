@@ -17,13 +17,14 @@ import ErrorMessage from "../features/ui/ErrorMessage";
 
 //ファーストページの内容を全て持つところ
 function IndexPage() {
+  const NUMBER_OF_INITIAL_POKEMONS = 20;
+
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [randomPokemons, setRandomPokemons] = useState([]);
   const [sortOrder, setSortOrder] = useState("number_asc");
-  const [displayLimit, setDisplayLimit] = useState(20); // 最初に表示するポケモンの数
   const [totalPokemons, setTotalPokemons] = useState(0); // ポケモンの総数
   const [isLoadMore, setIsLoadMore] = useState(false);
 
@@ -61,98 +62,27 @@ function IndexPage() {
   };
 
   useEffect(() => {
-    const fetchRandomData = async () => {
-      try {
-        const randomData = await fetchRandomPokemons(5);
-        setRandomPokemons(randomData);
-      } catch (error) {
-        setError(error);
-      }
-    };
-
-    fetchRandomData();
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
-      try {
-        const result = await fetchPokemons();
+      setLoading(true);
 
-        setPokemons(result);
-        setLoading(false);
+      try {
+        const pokemons = await fetchPokemons();
+        setPokemons(pokemons);
+
+        const randomPokemons = await fetchRandomPokemons(6);
+        setRandomPokemons(randomPokemons);
+
+        const totalCount = await fetchTotalPokemonCount();
+        setTotalPokemons(totalCount);
       } catch (error) {
         setError(error);
-        console.log(error);
       }
+
+      setLoading(false);
     };
 
     fetchData();
   }, []);
-
-  // ポケモンの総数を取得する
-  useEffect(() => {
-    fetchTotalPokemonCount();
-  }, []);
-
-  useEffect(() => {
-    const fetchAllPokemons = async () => {
-      if (isLoadMore) {
-        try {
-          // 全てのポケモンを取得する
-          const allPokemons = await fetchPokemons();
-          setPokemons(allPokemons);
-        } catch (error) {
-          setError(error);
-        }
-      }
-    };
-
-    fetchAllPokemons();
-  }, [isLoadMore]); // isLoadMoreが変更されたときにのみ実行
-
-  const getTotalPokemonCount = async () => {
-    // 名前を変更しました
-    try {
-      const totalCount = await fetchTotalPokemonCount(); // 正しい関数を呼び出し
-      setTotalPokemons(totalCount);
-    } catch (error) {
-      setError(error);
-    }
-  };
-
-  // useEffect内でこの新しい関数名を使用
-  useEffect(() => {
-    getTotalPokemonCount();
-  }, []);
-
-  // 「もっと見る」ボタンのクリックイベント
-  const handleLoadMore = async () => {
-    try {
-      const morePokemons = await fetchPokemons(totalPokemons, displayLimit);
-      setPokemons(morePokemons);
-      setDisplayLimit(totalPokemons); // 表示制限を総数に更新する
-    } catch (error) {
-      setError(error);
-    }
-  };
-
-  // ポケモンを取得する関数を変更
-  const fetchData = async (limit) => {
-    try {
-      // ポケモンを取得して状態を更新する
-      const result = await fetchPokemons(limit);
-      setPokemons(result);
-      setLoading(false);
-    } catch (error) {
-      setError(error);
-      console.log(error);
-    }
-  };
-
-  // useEffectを修正して、指定された数だけポケモンを取得する
-  useEffect(() => {
-    fetchData(displayLimit);
-  }, [displayLimit]);
 
   if (loading) {
     return <Loading />;
@@ -162,15 +92,17 @@ function IndexPage() {
     return <ErrorMessage message={error.message} />;
   }
 
+  const swiperConfig = {
+    spaceBetween: 50,
+    slidesPerView: 3,
+    loop: true,
+    onSlideChange: () => console.log("slide change"),
+    onSwiper: (swiper) => console.log(swiper),
+  };
+
   return (
     <div>
-      <Swiper
-        spaceBetween={50}
-        slidesPerView={3}
-        loop={true}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
-      >
+      <Swiper {...swiperConfig}>
         {randomPokemons.map((pokemon) => (
           <SwiperSlide key={pokemon.id} className="random-slide">
             <Link to={`/pokemon/${pokemon.id}`}>
@@ -189,7 +121,7 @@ function IndexPage() {
             </Link>
           </SwiperSlide>
         ))}
-      </Swiper>{" "}
+      </Swiper>
       <div className="inner">
         <h1>ポケモン一覧</h1>
         <select value={sortOrder} onChange={handleSortChange}>
@@ -198,7 +130,13 @@ function IndexPage() {
           <option value="name_asc">ABC順</option>
         </select>
 
-        <PokemonList pokemons={isLoadMore ? pokemons : pokemons.slice(0, 20)} />
+        <PokemonList
+          pokemons={
+            isLoadMore
+              ? pokemons
+              : pokemons.slice(0, NUMBER_OF_INITIAL_POKEMONS)
+          }
+        />
         {!isLoadMore && (
           <button className="more-btn" onClick={handleLoadMoreClick}>
             もっと見る

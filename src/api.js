@@ -25,7 +25,7 @@ export async function fetchPokemons(limit = 100, offset = 0) {
       pokemons.push({
         ...result,
         id,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+        image: pokemon.image,
         types: pokemon.types,
       });
     }
