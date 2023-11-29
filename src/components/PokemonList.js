@@ -9,7 +9,7 @@ function PokemonList({ pokemons }) {
   }
 
   return (
-    <div className="pokemon-list">
+    <div className="flex justify-between flex-wrap">
       {pokemons.map((pokemon) => (
         <PokemonItem key={pokemon.name} pokemon={pokemon} />
       ))}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function PokemonItem({ pokemon }) {
   return (
-    <div className="pokemon-item">
+    <div className="pokemon-item mb-14">
       <Link to={`/pokemon/${pokemon.name}`}>
         <img
           className="t-pokemon_img w-full p-1 bg-gray-200 rounded-3xl"

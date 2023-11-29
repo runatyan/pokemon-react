@@ -151,7 +151,7 @@ function IndexPage() {
         />
         {!isLoadMore && (
           <button
-            className="more-btn p-4 rounded-3xl border border-black"
+            className="more-btn p-4 rounded-3xl border border-black block my-0 mx-auto"
             onClick={handleLoadMoreClick}
           >
             もっと見る
